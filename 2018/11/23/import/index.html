@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="import,export,module.exports,exports,require 的区别"/>
+
+
+
+
+  <meta name="keywords" content="javascript," />
+
+
+
+
+
+  <link rel="alternate" href="/default" title="alsy'blog">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="http://yoursite.com/2018/11/23/import/"/>
+
+
+<meta name="description" content="前言前端开发，项目中常见到几种模块化的写法，import、require, export、exports、module.exports,这几种写法相似而又不同，让人困惑。 模块化规范说到几种写法的不用，其实主要是遵循的模块化规范不同，什么是模块化规范呢？  模块化规范：即为 JavaScript 提供一种模块编写、模块依赖和模块运行的方案。谁让最初的 JavaScript 是那么的裸奔呢——全局变">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="import,export,module.exports,exports,require 的区别">
+<meta property="og:url" content="http://yoursite.com/2018/11/23/import/index.html">
+<meta property="og:site_name" content="alsy&#39;blog">
+<meta property="og:description" content="前言前端开发，项目中常见到几种模块化的写法，import、require, export、exports、module.exports,这几种写法相似而又不同，让人困惑。 模块化规范说到几种写法的不用，其实主要是遵循的模块化规范不同，什么是模块化规范呢？  模块化规范：即为 JavaScript 提供一种模块编写、模块依赖和模块运行的方案。谁让最初的 JavaScript 是那么的裸奔呢——全局变">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-12-28T09:10:26.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="import,export,module.exports,exports,require 的区别">
+<meta name="twitter:description" content="前言前端开发，项目中常见到几种模块化的写法，import、require, export、exports、module.exports,这几种写法相似而又不同，让人困惑。 模块化规范说到几种写法的不用，其实主要是遵循的模块化规范不同，什么是模块化规范呢？  模块化规范：即为 JavaScript 提供一种模块编写、模块依赖和模块运行的方案。谁让最初的 JavaScript 是那么的裸奔呢——全局变">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> import,export,module.exports,exports,require 的区别 - alsy'blog </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">alsy'blog</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          import,export,module.exports,exports,require 的区别
+        
+      </h1>
+
+      <time class="post-time">
+          Nov 23 2018
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>前端开发，项目中常见到几种模块化的写法，import、require, export、exports、module.exports,这几种写法相似而又不同，让人困惑。</p>
+<h1 id="模块化规范"><a href="#模块化规范" class="headerlink" title="模块化规范"></a>模块化规范</h1><p>说到几种写法的不用，其实主要是遵循的模块化规范不同，什么是模块化规范呢？</p>
+<blockquote>
+<p>模块化规范：即为 JavaScript 提供一种模块编写、模块依赖和模块运行的方案。谁让最初的 JavaScript 是那么的裸奔呢——全局变量就是它的模块化规范。</p>
+</blockquote>
+<h2 id="野生规范"><a href="#野生规范" class="headerlink" title="野生规范"></a>野生规范</h2><p>  野生规范：指 JavaScript 社区中的开发者自己草拟的规则，得到了大家的承认或者广泛的应用。<br>  比如 CommonJS、AMD、CMD 等等。我们知道 node 的 module 遵循 CommonJS 规范，requirejs 遵循 AMD规范，seajs 遵循CMD规范。虽各有不同，但还是希望保持较为统一的代码风格。</p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// a.js</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// --- node ---</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  a: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;,</span><br><span class="line">  b: <span class="string">'xxx'</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// --- AMD or CMD ---</span></span><br><span class="line">define(<span class="function"><span class="keyword">function</span>(<span class="params">require, exports, module</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    a: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;,</span><br><span class="line">    b: <span class="string">'xxx'</span></span><br><span class="line">  &#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>  可以看出，AMD/CMD 和 node 的写法是非常相似的。AMD/CMD 除了在浏览器端的模块中要使用一个 define 函数来提供模块的闭包以外，与 node 的写法是完全相同的。<br>  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// b.js</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// --- node ---</span></span><br><span class="line"><span class="keyword">var</span> m = <span class="built_in">require</span>(<span class="string">'./a'</span>);</span><br><span class="line">m.a();</span><br><span class="line"></span><br><span class="line"><span class="comment">// --- AMD or CMD ---</span></span><br><span class="line">define(<span class="function"><span class="keyword">function</span>(<span class="params">require, exports, module</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> m = <span class="built_in">require</span>(<span class="string">'./a'</span>);</span><br><span class="line">  m.a();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>  在使用上，也非常相似。</p>
+<h2 id="名门正派"><a href="#名门正派" class="headerlink" title="名门正派"></a>名门正派</h2><p>  名门正派：指的是由 TC39 制定的新的 ECMAScript 版本的模块化规范。即在 ES6(ES2015) 中指定的 export/import。<br>  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// a.js</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> a = <span class="function"><span class="params">()</span> =&gt;</span> &#123;&#125;;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> b = <span class="string">'xxx'</span>;</span><br></pre></td></tr></table></figure></p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// b.js</span></span><br><span class="line"><span class="keyword">import</span> &#123; a, b &#125; <span class="keyword">from</span> <span class="string">'./a'</span>;</span><br><span class="line">a();</span><br></pre></td></tr></table></figure>
+<h1 id="moudle-exports-exports-require"><a href="#moudle-exports-exports-require" class="headerlink" title="moudle.exports, exports, require"></a>moudle.exports, exports, require</h1><p>  node 模块中的写法还是比较简单的：</p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"> </span><br></pre></td></tr></table></figure>
+<h1 id="export-import"><a href="#export-import" class="headerlink" title="export, import"></a>export, import</h1>
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/javascript/">javascript</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+    
+      <a class="next" href="/2018/11/08/test/">
+        <span class="next-text nav-default">常用的Markdown 语法</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2014 -
+    
+    2020
+    <span class="footer-author">阿林十一.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/frostfan/hexo-theme-polarbear">Polar Bear</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>
